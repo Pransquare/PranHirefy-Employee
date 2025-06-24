@@ -1,7 +1,9 @@
 package com.pranhirefy.employee.service.impl;
 
+import com.pranhirefy.employee.dto.EmployeeBankDetailsDto;
 import com.pranhirefy.employee.dto.EmployeeBasicDetailsDto;
 import com.pranhirefy.employee.entity.EmployeeBasicDetailsEntity;
+import com.pranhirefy.employee.exception.EmployeeBankDetailsNotFound;
 import com.pranhirefy.employee.exception.EmployeeNotFoundException;
 import com.pranhirefy.employee.mapper.EmployeeBasicDetailsMapper;
 import com.pranhirefy.employee.repository.EmployeeBasicDetailsRepository;
@@ -10,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -41,7 +44,7 @@ public class EmployeeBasicDetailsServiceImpl implements EmployeeBasicDetailsServ
     @Override
     public EmployeeBasicDetailsDto getEmployeeById(Long id) {
         EmployeeBasicDetailsEntity entity = employeeRepository.findById(id)
-                .orElseThrow(() -> new EmployeeNotFoundException("Employee with ID " + id + " not found"));
+                .orElseThrow(() -> new EmployeeBankDetailsNotFound("Employee bank details " + id +"not found"));
         return EmployeeBasicDetailsMapper.toDto(entity);
     }
 
@@ -50,4 +53,12 @@ public class EmployeeBasicDetailsServiceImpl implements EmployeeBasicDetailsServ
     public void deleteEmployeeById(Long id) {
         employeeRepository.deleteById(id);
     }
+    
+   
+    	
+    	
+    	
+    		
+    	
+    
 }
