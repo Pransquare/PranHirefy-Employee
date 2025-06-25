@@ -1,26 +1,28 @@
 package com.pranhirefy.employee.controller;
 
-import java.util.HashMap;
+
+
+import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.boot.web.servlet.error.ErrorController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import java.util.Collections;
 import java.util.Map;
 
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+@Controller
+public class FallbackController implements ErrorController {
 
-@RestController
-public class FallbackController {
+    @RequestMapping("/error")
+    public ResponseEntity<Map<String, String>> handleFallback(HttpServletRequest request) {
+        return ResponseEntity.status(404)
+                .body(Collections.singletonMap("message", "Invalid Base URL. Please check your endpoint."));
+    }
 
-//    @RequestMapping(value = "/**")
-//    public ResponseEntity<String> fallback() {
-//        return ResponseEntity.status(HttpStatus.NOT_FOUND)
-//                             .body("Invalid base URL. Please check the API endpoint.");
-//    }
-	@RequestMapping(value = "/**")
-    public ResponseEntity<Map<String, Object>> fallback() {
-        Map<String, Object> response = new HashMap<>();
-        response.put("status", "failed");
-        response.put("message", "Invalid base URL. Please check the API endpoint.");
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+    // Optional (for older Spring Boot versions)
+    public String getErrorPath() {
+        return "/error";
+
     }
 }
